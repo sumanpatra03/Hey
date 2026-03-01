@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hey Beautiful 💕</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .handwriting {
+            font-family: 'Patrick Hand', cursive;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #c8e6c9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #81c784;
+            border-radius: 4px;
+        }
+
+        /* Polaroid Card Style */
+        .polaroid {
+            background: white;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.05);
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(10%) contrast(95%);
+            transition: filter 0.3s;
+        }
+
+        .polaroid:hover img {
+            filter: sepia(0%) contrast(100%);
+        }
+
+        .polaroid-caption {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Patrick Hand', cursive;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* Pixel Heart Animation */
+        .pixel-heart {
+            width: 15px;
+            height: 15px;
+            background: #e91e63;
+            position: relative;
+            animation: heartbeat 1.5s infinite;
+            box-shadow: 
+                -5px -5px 0 #e91e63, 5px -5px 0 #e91e63,
+                -10px -5px 0 #e91e63, 10px -5px 0 #e91e63,
+                -5px -10px 0 #e91e63, 0px -10px 0 #e91e63, 5px -10px 0 #e91e63,
+                -15px 0px 0 #e91e63, 15px 0px 0 #e91e63,
+                -15px 5px 0 #e91e63, 15px 5px 0 #e91e63,
+                -10px 10px 0 #e91e63, 10px 10px 0 #e91e63,
+                -5px 15px 0 #e91e63, 5px 15px 0 #e91e63,
+                0px 10px 0 #e91e63;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Text Card Style */
+        .text-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Button Styles */
+        .btn-haan {
+            background: #a5d6a7;
+            color: #1b5e20;
+            border: 2px solid #81c784;
+            transition: all 0.3s;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .btn-haan:hover {
+            background: #81c784;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(129, 199, 132, 0.4);
+        }
+
+        .btn-nahi {
+            background: #ef9a9a;
+            color: #b71c1c;
+            border: 2px solid #e57373;
+            position: absolute;
+            transition: all 0.2s;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: not-allowed;
+        }
+
+        /* Floating animation */
+        .float {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #f8bbd0 0%, #f48fb1 100%);
+            z-index: 1000;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Layout variations */
+        .layout-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .layout-4 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .layout-4 .polaroid {
+            aspect-ratio: 1;
+        }
+
+        .layout-single {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .layout-2, .layout-4 {
+                grid-template-columns: 1fr;
+                max-width: 300px;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Floating Pixel Hearts Background -->
+    <div id="floatingHearts" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col items-center justify-center relative z-10 px-4 py-20">
+        <div class="text-center space-y-6 reveal active">
+            <div class="flex justify-center mb-6">
+                <div class="pixel-heart"></div>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold text-gray-800 tracking-tight">
+                Hey Beautiful
+            </h1>
+            
+            <p class="handwriting text-2xl md:text-3xl text-gray-600 mt-4">
+                Tumhare liye kuch special hai...
+            </p>
+            
+            <div class="mt-8 float">
+                <svg class="w-8 h-8 mx-auto text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Single Photo with Text -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="text-card reveal">
+                <div class="flex justify-center mb-4">
+                    <div class="pixel-heart" style="transform: scale(0.6);"></div>
+                </div>
+                <p class="handwriting text-2xl text-gray-700 leading-relaxed">
+                    Bas ek haan ka intezaar hai,<br>
+                    Mere dil ko sirf tumse pyaar hai.
+                </p>
+            </div>
+
+            <div class="layout-single reveal">
+                <div class="polaroid aspect-[3/4]">
+                    <img src="assets/shreyo1.jpeg" alt="Memory">
+                    <div class="polaroid-caption">Ten muskaan meri jaan hai...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: 2 Photos Side by Side -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <h2 class="handwriting text-3xl text-gray-700">Yaadein jo dil ke kareeb hain...</h2>
+            </div>
+            
+            <div class="layout-2">
+                <div class="polaroid aspect-square reveal">
+                    <img src="assets/shreyo2.jpeg" alt="Memory 1">
+                    <div class="polaroid-caption">Paradise</div>
+                </div>
+                
+                <div class="polaroid aspect-[3/4] reveal" style="transition-delay: 0.2s;">
+                    <img src="assets/shreyo4.jpeg" alt="Memory 2">
+                    <div class="polaroid-caption">Jaadu lamhe</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Text + 4 Photos Grid -->
+    <section class="py-20 px-4 relative z-10 bg-white/30">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="text-card reveal">
+                <p class="handwriting text-2xl text-gray-700">
+                    Har pal tumhare saath<br>
+                    ek nayi kahani likhta hai...
+                </p>
+            </div>
+
+            <div class="layout-4 reveal">
+                <div class="polaroid">
+                    <img src="assets/shreyo8.jpeg" alt="Memory 1">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Coffee Date</div>
+                </div>
+                <div class="polaroid">
+                    <img src="assets/shreyo11.jpeg" alt="Memory 2">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Sunset</div>
+                </div>
+                <div class="polaroid">
+                    <img src="assets/shreyo12.jpeg" alt="Memory 3">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Smiles</div>
+                </div>
+                <div class="polaroid">
+                    <img src="assets/shreyo13.jpeg" alt="Memory 4">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Forever</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Section: Quote + 3 Photos -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="text-card reveal">
+                <p class="handwriting text-2xl text-gray-700">
+                    Tere bina zindagi adhuri si lagti hai,<br>
+                    Tere saath har khushi poori si lagti hai.
+                </p>
+            </div>
+
+            <div class="layout-2 reveal">
+                <div class="polaroid aspect-square">
+                    <img src="assets/shreyo14.jpeg" alt="Memory">
+                    <div class="polaroid-caption">Dil ki baat</div>
+                </div>
+                <div class="polaroid aspect-square">
+                    <img src="assets/shreyo5.jpeg" alt="Memory">
+                    <div class="polaroid-caption">Khushiyan</div>
+                </div>
+            </div>
+            <div class="layout-single reveal">
+                <div class="polaroid aspect-[4/5]">
+                    <img src="assets/shreyo18.jpeg" alt="Memory">
+                    <div class="polaroid-caption">Meri duniya</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: 2 Large Photos -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="max-w-5xl mx-auto space-y-12">
+            <div class="layout-2">
+                <div class="polaroid aspect-[4/5] reveal">
+                    <img src="assets/shreyo19.jpeg" alt="Memory 1">
+                    <div class="polaroid-caption">Dil ki baatein</div>
+                </div>
+                <div class="polaroid aspect-[4/5] reveal" style="transition-delay: 0.2s;">
+                    <img src="assets/shreyo23.jpeg" alt="Memory 2">
+                    <div class="polaroid-caption">Khaas pal</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Mixed Layout (1 Large + 2 Small) -->
+    <section class="py-20 px-4 relative z-10 bg-white/30">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="polaroid aspect-[3/4] reveal">
+                    <img src="assets/shreyo16.jpeg" alt="Main Memory">
+                    <div class="polaroid-caption">Meri duniya</div>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="text-card reveal">
+                        <p class="handwriting text-xl text-gray-700">
+                            Tum ho toh sab kuch acha lagta hai...
+                        </p>
+                    </div>
+                    <div class="layout-2" style="max-width: 100%;">
+                        <div class="polaroid aspect-square reveal">
+                            <img src="assets/shreyo10.jpeg" alt="Small 1">
+                            <div class="polaroid-caption" style="font-size: 0.9rem;">Cute</div>
+                        </div>
+                        <div class="polaroid aspect-square reveal" style="transition-delay: 0.1s;">
+                            <img src="assets/shreyo7.jpeg" alt="Small 2">
+                            <div class="polaroid-caption" style="font-size: 0.9rem;">Pretty</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Section: Romantic Quote + 2 Photos -->
+    <section class="py-20 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="text-card reveal">
+                <p class="handwriting text-2xl text-gray-700">
+                    Chaand bhi sharmaye tumhari khubsurti dekh kar,<br>
+                    Sitare bhi jhilmilaye tumhari muskaan dekh kar.
+                </p>
+            </div>
+
+            <div class="layout-2 reveal">
+                <div class="polaroid aspect-[3/4]">
+                    <img src="assets/shreyo17.jpeg" alt="Memory">
+                    <div class="polaroid-caption">Haseen lamhe</div>
+                </div>
+                <div class="polaroid aspect-[3/4]">
+                    <img src="assets/shreyo21.jpeg" alt="Memory">
+                    <div class="polaroid-caption">Pyaar bhari baatein</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Section: 4 Photos Grid + Quote -->
+    <section class="py-20 px-4 relative z-10 bg-white/30">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="layout-4 reveal">
+                <div class="polaroid">
+                    <img src="assets/shreyo22.jpeg" alt="Memory">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Smile</div>
+                </div>
+                <div class="polaroid">
+                    <img src="assets/shreyo9.jpeg" alt="Memory">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Joy</div>
+                </div>
+                <div class="polaroid">
+                    <img src="assets/shreyo6.jpeg" alt="Memory">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Bliss</div>
+                </div>
+                <div class="polaroid">
+                    <img src="assets/shreyo20.jpeg" alt="Memory">
+                    <div class="polaroid-caption" style="font-size: 0.9rem;">Love</div>
+                </div>
+            </div>
+
+            <div class="text-card reveal">
+                <p class="handwriting text-2xl text-gray-700">
+                    Tumse milne ki tamanna hai,<br>
+                    Tumhare saath waqt bitane ki khwahish hai.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Big Question Section -->
+    <section class="min-h-screen flex items-center justify-center relative z-10 px-4 py-20" id="questionSection">
+        <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 max-w-2xl w-full shadow-2xl reveal">
+            <div class="text-center space-y-8">
+                <!-- Pixel Art Character -->
+                <div class="flex justify-center mb-6">
+                    <div style="display: grid; grid-template-columns: repeat(12, 8px); gap: 0; width: 96px; margin: 0 auto;">
+                        <!-- Simple pixel art boy with flower -->
+                        <div style="grid-column: 5/9; grid-row: 1; height: 8px; background: #8d6e63;"></div>
+                        <div style="grid-column: 4/10; grid-row: 2; height: 8px; background: #ffccbc;"></div>
+                        <div style="grid-column: 4/6; grid-row: 2; height: 8px; background: #333;"></div>
+                        <div style="grid-column: 8/10; grid-row: 2; height: 8px; background: #333;"></div>
+                        <div style="grid-column: 6/8; grid-row: 3; height: 8px; background: #ff7043;"></div>
+                        <div style="grid-column: 4/10; grid-row: 4; height: 8px; background: #2196f3;"></div>
+                        <div style="grid-column: 4/6; grid-row: 4/8; height: 32px; background: #2196f3;"></div>
+                        <div style="grid-column: 8/10; grid-row: 4/8; height: 32px; background: #2196f3;"></div>
+                        <div style="grid-column: 6/8; grid-row: 5/7; height: 16px; background: #1976d2;"></div>
+                        <div style="grid-column: 4/6; grid-row: 8; height: 8px; background: #333;"></div>
+                        <div style="grid-column: 8/10; grid-row: 8; height: 8px; background: #333;"></div>
+                        <!-- Flower -->
+                        <div style="grid-column: 10; grid-row: 3; height: 8px; background: #e91e63;"></div>
+                        <div style="grid-column: 9/11; grid-row: 4; height: 8px; background: #f48fb1;"></div>
+                        <div style="grid-column: 10; grid-row: 5; height: 8px; background: #c2185b;"></div>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">
+                    Will you go on a date with me?
+                </h2>
+                
+                <p class="handwriting text-2xl text-gray-600">
+                    Kya tum mere saath date pe chalogi?
+                </p>
+
+                <div class="relative h-24 flex items-center justify-center gap-6 mt-8" id="buttonContainer">
+                    <button onclick="sayYes()" class="btn-haan px-8 py-3 rounded-full">
+                        Haan ji! 💚
+                    </button>
+                    
+                    <button id="nahiBtn" onmouseover="moveNahi()" onclick="moveNahi()" class="btn-nahi px-8 py-3 rounded-full">
+                        Nahi 😢
+                    </button>
+                </div>
+
+                <p class="text-sm text-gray-400 mt-4 handwriting">Psst... try clicking "Nahi" 😉</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="success-modal flex items-center justify-center" style="display: none;">
+        <div class="text-center px-4 relative z-10">
+            <div class="pixel-heart mb-8" style="transform: scale(1.5); margin: 0 auto 40px;"></div>
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 handwriting">
+                She Said Yes!
+            </h1>
+            <p class="text-2xl text-white/90 mb-4 handwriting">
+                Tumne meri duniya roshan kar di! ✨
+            </p>
+            <p class="text-lg text-white/80">
+                I can't wait for our special date 💕
+            </p>
+            
+            <div class="mt-8 flex justify-center gap-4 text-4xl">
+                <span class="animate-bounce">🎉</span>
+                <span class="animate-bounce" style="animation-delay: 0.2s">💕</span>
+                <span class="animate-bounce" style="animation-delay: 0.4s">🌹</span>
+                <span class="animate-bounce" style="animation-delay: 0.6s">✨</span>
+            </div>
+        </div>
+        <div id="confettiContainer"></div>
+    </div>
+
+    <script>
+        // Create floating pixel hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const heart = document.createElement('div');
+            heart.style.cssText = `
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background: #e91e63;
+                left: ${Math.random() * 100}%;
+                top: -20px;
+                opacity: 0.3;
+                animation: fall ${Math.random() * 10 + 10}s linear infinite;
+                box-shadow: 
+                    -5px -5px 0 #e91e63, 5px -5px 0 #e91e63,
+                    -5px -10px 0 #e91e63, 0px -10px 0 #e91e63, 5px -10px 0 #e91e63,
+                    -10px 0px 0 #e91e63, 10px 0px 0 #e91e63,
+                    -10px 5px 0 #e91e63, 10px 5px 0 #e91e63,
+                    -5px 10px 0 #e91e63, 5px 10px 0 #e91e63,
+                    0px 5px 0 #e91e63;
+            `;
+            container.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 20000);
+        }
+
+        setInterval(createFloatingHearts, 3000);
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // The tricky "Nahi" button
+        function moveNahi() {
+            const btn = document.getElementById('nahiBtn');
+            const container = document.getElementById('buttonContainer');
+            const containerRect = container.getBoundingClientRect();
+            
+            const maxX = containerRect.width - btn.offsetWidth;
+            const maxY = containerRect.height - btn.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+            btn.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        }
+
+        // Success function
+        function sayYes() {
+            document.getElementById('successModal').style.display = 'flex';
+            createConfetti();
+            
+            // Create many confetti
+            setInterval(createConfettiPiece, 100);
+        }
+
+        function createConfetti() {
+            for(let i = 0; i < 50; i++) {
+                setTimeout(createConfettiPiece, i * 50);
+            }
+        }
+
+        function createConfettiPiece() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#f8bbd0', '#f48fb1', '#f06292', '#ec407a', '#e91e63', '#c2185b', '#fff', '#ffeb3b'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-10px';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            container.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
